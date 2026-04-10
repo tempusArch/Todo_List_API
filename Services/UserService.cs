@@ -36,7 +36,7 @@ public class UserService {
         return user;
     }
 
-    public string Generate_JWT_Token(UserModel um) {
+    public string Generate_JWT(UserModel um) {
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWT:Key"]));
         var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 

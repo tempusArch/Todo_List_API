@@ -39,7 +39,7 @@ public class UserController : ControllerBase {
         if (loginedUser == null)
             return Unauthorized();
 
-        var accessToken = _userService.Generate_JWT_Token(loginedUser);
+        var accessToken = _userService.Generate_JWT(loginedUser);
         var refreshToken = _userService.Generate_RefreshToken(loginedUser.Id.ToString());
 
         _context.RefreshTokenTable.Add(refreshToken);
@@ -74,7 +74,7 @@ public class UserController : ControllerBase {
         await _context.SaveChangesAsync();
 
         var um = await _context.UserTable.SingleOrDefaultAsync(n => n.Id == int.Parse(kyuuRefreshToken.UserId));
-        var newAccessToken = _userService.Generate_JWT_Token(um);
+        var newAccessToken = _userService.Generate_JWT(um);
 
         Response.Cookies.Append("RefreshToken", newRefreshToken.Token, new CookieOptions {
             HttpOnly = true,
